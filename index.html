@@ -203,7 +203,6 @@
             text-shadow: 0 0 8px rgba(255, 234, 0, 0.6);
         }
 
-        /* Прогрес до 1000 підписників */
         .subs-progress-wrap {
             margin-bottom: 24px;
         }
@@ -459,18 +458,6 @@
             font-size: 1.05rem;
         }
 
-        .playlist-frame {
-            width: 100%;
-            height: 160px;
-            background: #1b1f31;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-dim);
-            border: 2px dashed #7f00ff;
-        }
-
         .video-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -492,10 +479,10 @@
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: bold;
             transition: all 0.2s ease;
             width: 100%;
@@ -504,7 +491,7 @@
         .btn-expand-video:hover {
             background: #00d4ff;
             color: #000;
-            box-shadow: 0 0 10px #00d4ff;
+            box-shadow: 0 0 12px #00d4ff;
         }
 
         .video-modal {
@@ -539,7 +526,7 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        .video-modal-content iframe {
+        .video-modal-content iframe, .video-modal-content video {
             width: 100%;
             height: 100%;
             border: none;
@@ -633,6 +620,397 @@
         .close-modal-btn:hover {
             color: #ff007f;
         }
+
+        /* ===== Мод та посилання ===== */
+        a.btn-shimmer { text-decoration: none; }
+
+        .btn-shimmer:focus-visible,
+        .btn-link:focus-visible {
+            outline: 2px solid #ffea00;
+            outline-offset: 3px;
+        }
+
+        .mod-card {
+            background: rgba(18, 20, 32, 0.8);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 28px;
+            transition: border-color 0.3s ease;
+        }
+        .mod-card:hover { border-color: #7f00ff; }
+
+        .mod-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .mod-name { font-size: 1.15rem; font-weight: 700; }
+        .mod-meta {
+            font-size: 0.8rem;
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 20px;
+            padding: 3px 10px;
+        }
+        .mod-desc {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin-bottom: 14px;
+        }
+
+        .btn-shimmer.is-soon {
+            animation: none;
+            background: #2a324d;
+            box-shadow: none;
+            color: var(--text-dim);
+            cursor: default;
+        }
+        .btn-shimmer.is-soon:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .links-section {
+            border-top: 2px dashed var(--border-color);
+            padding-top: 20px;
+            margin-top: 24px;
+        }
+        .links-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 9px 18px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        .btn-link:hover {
+            transform: translateY(-2px);
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.12);
+        }
+        .btn-link.primary {
+            background: linear-gradient(90deg, #ff007f, #7f00ff);
+            border-color: transparent;
+        }
+
+        /* ===== Плейлист серій ===== */
+        .pl-content { display: none; }
+        .pl.has-items .pl-content { display: block; }
+        .pl.has-items .pl-empty { display: none; }
+
+        .pl-empty {
+            height: 160px;
+            border: 2px dashed #7f00ff;
+            border-radius: 12px;
+            background: #1b1f31;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text-dim);
+            text-align: center;
+            padding: 12px;
+        }
+        .pl-empty-icon { font-size: 2rem; }
+
+        .pl-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 22px rgba(127, 0, 255, 0.35);
+        }
+        .pl-frame video { width: 100%; height: 100%; border: 0; display: block; outline: none; }
+
+        .pl-now {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 12px 0 8px 0;
+        }
+        .pl-now-info { flex: 1; min-width: 0; }
+        .pl-now-label { font-size: 0.8rem; color: #ffea00; font-weight: 700; }
+        .pl-now-title {
+            font-weight: 700;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pl-nav {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #ff007f, #7f00ff);
+            box-shadow: 0 4px 12px rgba(127, 0, 255, 0.45);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .pl-nav:hover:not(:disabled) { transform: scale(1.1); }
+        .pl-nav:disabled { opacity: 0.35; cursor: default; box-shadow: none; }
+        .pl-nav:focus-visible,
+        .pl-item:focus-visible { outline: 2px solid #ffea00; outline-offset: 2px; }
+
+        .pl-tools {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .pl-search {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 14px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .pl-search:focus {
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.35);
+        }
+        .pl-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            user-select: none;
+            position: relative;
+        }
+        .pl-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+        .pl-switch-ui {
+            width: 36px;
+            height: 20px;
+            border-radius: 20px;
+            background: #2a324d;
+            position: relative;
+            transition: background 0.2s ease;
+            flex-shrink: 0;
+        }
+        .pl-switch-ui::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s ease;
+        }
+        .pl-switch input:checked + .pl-switch-ui { background: linear-gradient(90deg, #ff007f, #7f00ff); }
+        .pl-switch input:checked + .pl-switch-ui::after { transform: translateX(16px); }
+        .pl-switch input:focus-visible + .pl-switch-ui { outline: 2px solid #ffea00; outline-offset: 2px; }
+
+        .pl-progress { margin-bottom: 10px; }
+        .pl-progress-text { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 5px; }
+        .pl-progress-bar {
+            height: 6px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+        .pl-progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #00e676, #00d4ff);
+            transition: width 0.5s ease;
+        }
+
+        .pl-list {
+            position: relative;
+            max-height: 380px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #7f00ff rgba(18, 20, 32, 0.8);
+        }
+        .pl-list::-webkit-scrollbar { width: 8px; }
+        .pl-list::-webkit-scrollbar-track { background: rgba(18, 20, 32, 0.8); border-radius: 10px; }
+        .pl-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff007f, #7f00ff, #00d4ff);
+            border-radius: 10px;
+        }
+
+        .pl-group { flex-shrink: 0; }
+        .pl-chev {
+            width: 16px;
+            flex-shrink: 0;
+            text-align: center;
+            color: #00d4ff;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+        .pl-group.open .pl-chev { transform: rotate(90deg); }
+        .pl-group.has-active .pl-group-head { border-color: rgba(0, 212, 255, 0.55); }
+
+        .pl-parts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 6px 0 2px 24px;
+            padding-left: 12px;
+            border-left: 2px solid rgba(127, 0, 255, 0.55);
+        }
+        .pl-subitem {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            text-align: left;
+            background: rgba(27, 31, 49, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 10px;
+            color: var(--text-color);
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .pl-subitem:hover { border-color: #7f00ff; }
+        .pl-subitem:focus-visible { outline: 2px solid #ffea00; outline-offset: 2px; }
+        .pl-subitem.active {
+            border-color: #00d4ff;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.14), rgba(127, 0, 255, 0.1));
+        }
+        .pl-subdot { width: 14px; flex-shrink: 0; text-align: center; font-size: 0.65rem; color: var(--text-dim); }
+        .pl-subdot::before { content: '•'; font-size: 0.9rem; }
+        .pl-subitem.active .pl-subdot { color: #00d4ff; }
+        .pl-subitem.active .pl-subdot::before { content: '▶'; font-size: 0.65rem; }
+        .pl-subtitle { flex: 1; min-width: 0; }
+        .pl-subitem.watched .pl-check {
+            background: rgba(0, 230, 118, 0.2);
+            border-color: #00e676;
+            color: #00e676;
+        }
+
+        .pl-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            text-align: left;
+            background: rgba(27, 31, 49, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            color: var(--text-color);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+        }
+        .pl-item:hover { border-color: #7f00ff; transform: translateX(3px); }
+        .pl-item.active {
+            border-color: #00d4ff;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.14), rgba(127, 0, 255, 0.1));
+            box-shadow: 0 0 14px rgba(0, 212, 255, 0.25);
+        }
+        .pl-thumb {
+            position: relative;
+            width: 112px;
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #252a3e;
+            flex-shrink: 0;
+        }
+        .pl-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .pl-num {
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 6px;
+            border-radius: 11px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffea00;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        .pl-item.active .pl-thumb::after {
+            content: '▶';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.45);
+            font-size: 1.2rem;
+            color: #fff;
+        }
+        .pl-meta { flex: 1; min-width: 0; }
+        .pl-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .pl-sub { font-size: 0.75rem; color: var(--text-dim); margin-top: 3px; }
+        .pl-item.active .pl-sub { color: #00d4ff; }
+        .pl-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: transparent;
+        }
+        .pl-item.watched .pl-check {
+            background: rgba(0, 230, 118, 0.2);
+            border-color: #00e676;
+            color: #00e676;
+        }
+        .pl-none { text-align: center; color: var(--text-dim); padding: 18px 0; font-size: 0.9rem; }
+
+        @media (max-width: 520px) {
+            .channel-title { font-size: 2rem; letter-spacing: 1px; overflow-wrap: anywhere; }
+            .pl-thumb { width: 88px; }
+            .pl-title { font-size: 0.85rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .pl-item, .pl-nav, .pl-progress-fill, .pl-chev, .pl-subitem { transition: none; }
+        }
     </style>
 </head>
 <body>
@@ -693,9 +1071,18 @@
                 <button class="btn-shimmer" onclick="openSerial('The Heart of Infinity')">
                     <span>The Heart of Infinity</span> ➔
                 </button>
-                <button class="btn-shimmer" onclick="openSerial('The Verity')">
-                    <span>The Verity</span> ➔
-                </button>
+            </div>
+
+            <h2 class="section-title" id="txt-mod-title">🧩 Мод:</h2>
+            <div class="mod-card">
+                <div class="mod-top">
+                    <span class="mod-name" id="mod-name"></span>
+                    <span class="mod-meta" id="mod-meta"></span>
+                </div>
+                <p class="mod-desc" id="mod-desc"></p>
+                <a class="btn-shimmer is-soon" id="mod-btn" target="_blank" rel="noopener">
+                    <span id="mod-btn-text"></span> <span>➔</span>
+                </a>
             </div>
 
             <div class="servers-section">
@@ -717,6 +1104,11 @@
                     <a href="https://monicore.com.ua/server/98/dragonsevenua-minecraft-server/" target="_blank" class="btn-site txt-site-btn">Сайт</a>
                 </div>
             </div>
+
+            <div class="links-section">
+                <h2 class="section-title" id="txt-links-title">🔗 Посилання:</h2>
+                <div class="links-row" id="links-row"></div>
+            </div>
         </div>
 
         <div id="page-serial" class="page">
@@ -734,8 +1126,49 @@
                     <span><span id="txt-episodes-label">🍿 Серії:</span> <span id="episodes-range" style="color: #ffea00;">1 - 31(P2)</span></span>
                     <span style="color: #00e676;"><span id="txt-online-label">● Онлайн:</span> <span id="serial-online">0</span></span>
                 </div>
-                <div class="playlist-frame">
-                    <span id="txt-playlist-placeholder">[ Вбудований плейлист / Плеєр ]</span>
+                <div class="pl" id="playlist">
+                    <div class="pl-empty">
+                        <div class="pl-empty-icon">🎞️</div>
+                        <div id="pl-empty-text">Серії скоро з'являться</div>
+                    </div>
+
+                    <div class="pl-content">
+                        <!-- Власне HTML5 відеоплеєр замість iframe -->
+                        <div class="pl-frame" id="pl-frame">
+                            <video id="local-video-player" controls poster="images/Dark.png" style="width:100%; height:100%;">
+                                <source id="local-video-src" src="" type="video/mp4">
+                                Ваш браузер не підтримує відео.
+                            </video>
+                        </div>
+
+                        <div class="pl-now">
+                            <button type="button" class="pl-nav" id="pl-prev" onclick="plStep(-1)">◀</button>
+                            <div class="pl-now-info">
+                                <div class="pl-now-label" id="pl-now-label"></div>
+                                <div class="pl-now-title" id="pl-now-title"></div>
+                            </div>
+                            <button type="button" class="pl-nav" id="pl-next" onclick="plStep(1)">▶</button>
+                        </div>
+
+                        <!-- КІНОРЕЖИМ ПЛЕЙЛИСТА -->
+                        <button type="button" class="btn-expand-video txt-cinema-btn" id="pl-cinema-btn" onclick="openPlaylistCinemaModal()" style="margin-bottom: 12px;">⛶ Кінорежим</button>
+
+                        <div class="pl-tools">
+                            <input type="search" class="pl-search" id="pl-search" autocomplete="off">
+                            <label class="pl-switch">
+                                <input type="checkbox" id="pl-autonext" checked>
+                                <span class="pl-switch-ui"></span>
+                                <span id="txt-pl-autonext"></span>
+                            </label>
+                        </div>
+
+                        <div class="pl-progress">
+                            <div class="pl-progress-text" id="pl-progress-text"></div>
+                            <div class="pl-progress-bar"><div class="pl-progress-fill" id="pl-progress-fill"></div></div>
+                        </div>
+
+                        <div class="pl-list" id="pl-list"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -744,7 +1177,7 @@
 
     <!-- МОДАЛЬНЕ ВІКНО КІНОРЕЖИМУ -->
     <div id="video-modal" class="video-modal" onclick="closeVideoModalOnBg(event)">
-        <div class="video-modal-content">
+        <div class="video-modal-content" id="modal-video-container">
             <button class="close-modal-btn" onclick="closeVideoModal()">✕</button>
             <iframe id="modal-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
@@ -775,6 +1208,78 @@
     <script>
         const CHANNEL_ID = "UCXUG1bS14G8a3Vy_GkhlG9Q";
         const YOUTUBE_API_KEY = "AIzaSyAuM6Mq_i7ZWcVpEvlanJczC4-iAM0TAq8"; 
+
+        // ================= НАЛАШТУВАННЯ =================
+        const MOD = {
+            name: "Мій мод",
+            version: "1.20.1",        
+            loader: "forge",         
+            desc: {
+                uk: "Скоро тут з'явиться посилання на завантаження.",
+                en: "The download link will appear here soon."
+            },
+            releaseDate: null,  
+            url: ""             
+        };
+
+        const LINKS = [
+            { label: { uk: "Збірка Дераса", en: "Deras` modpack" }, url: `https://www.curseforge.com/members/deras23/projects`, primary: true },
+            { label: { uk: "Telegram", en: "Telegram" }, url: "" },
+            { label: { uk: "Discord", en: "Discord" }, url: "" },
+            { label: { uk: "Інший сайт", en: "Another site" }, url: "" }
+        ];
+        // ================================================
+
+        function renderMod() {
+            const btn = document.getElementById("mod-btn");
+            if (!btn) return;
+            const t = translations[currentLang];
+
+            document.getElementById("mod-name").innerText = MOD.name;
+            const meta = [MOD.version, MOD.loader].filter(Boolean).join(" • ");
+            const metaEl = document.getElementById("mod-meta");
+            metaEl.innerText = meta;
+            metaEl.style.display = meta ? "" : "none";
+            document.getElementById("mod-desc").innerText = MOD.desc[currentLang] || MOD.desc.uk || "";
+
+            const textEl = document.getElementById("mod-btn-text");
+            const left = MOD.releaseDate ? new Date(MOD.releaseDate) - new Date() : 0;
+            const waiting = left > 0;
+
+            if (MOD.url && !waiting) {
+                btn.href = MOD.url;
+                btn.classList.remove("is-soon");
+                btn.removeAttribute("aria-disabled");
+                textEl.innerText = t.modDownload;
+            } else {
+                btn.removeAttribute("href");
+                btn.classList.add("is-soon");
+                btn.setAttribute("aria-disabled", "true");
+                if (waiting) {
+                    const d = Math.floor(left / 86400000);
+                    const h = Math.floor((left % 86400000) / 3600000);
+                    textEl.innerText = `${t.modIn} ${d} ${t.dayShort} ${h} ${t.hourShort}`;
+                } else {
+                    textEl.innerText = t.modSoon;
+                }
+            }
+        }
+
+        function renderLinks() {
+            const row = document.getElementById("links-row");
+            if (!row) return;
+            row.innerHTML = "";
+            LINKS.filter(l => l.url).forEach(l => {
+                const a = document.createElement("a");
+                a.className = "btn-link" + (l.primary ? " primary" : "");
+                a.href = l.url;
+                a.target = "_blank";
+                a.rel = "noopener";
+                a.textContent = l.label[currentLang] || l.label.uk;
+                row.appendChild(a);
+            });
+            document.querySelector(".links-section").style.display = row.children.length ? "" : "none";
+        }
 
         document.addEventListener('mousemove', (e) => {
             document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
@@ -876,10 +1381,11 @@
 
             if (YOUTUBE_API_KEY) {
                 try {
-                    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=1&type=video`);
+                    const uploads = "UU" + CHANNEL_ID.slice(2);
+                    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=1&playlistId=${uploads}&key=${YOUTUBE_API_KEY}`);
                     const data = await res.json();
                     if (data.items && data.items.length > 0) {
-                        updateLastVideoUI(data.items[0].id.videoId);
+                        updateLastVideoUI(data.items[0].contentDetails.videoId);
                         return;
                     }
                 } catch (e) {
@@ -941,13 +1447,30 @@
                 actorsTitle: "🎭 Актори (ПКМ — деталі)",
                 episodesLabel: "🍿 Серії:",
                 onlineLabel: "● Онлайн:",
-                playlistPlaceholder: "[ Вбудований плейлист / Плеєр ]",
                 teracubeLive: "12 онлайн",
                 dragonLive: "5 онлайн",
                 actorInfoTitle: "ℹ️ Інформація про персонажа",
                 actorRoleLabel: "Роль:",
                 actorStatusLabel: "Статус:",
-                goalLabel: "🎯 Мета: 1000 підписників"
+                goalLabel: "🎯 Мета: 1000 підписників",
+                modTitle: "🧩 Мод:",
+                modDownload: "⬇ Завантажити мод",
+                modSoon: "⏳ Скоро вихід",
+                modIn: "⏳ Вихід через",
+                dayShort: "д.",
+                hourShort: "год.",
+                linksTitle: "🔗 Посилання:",
+                epWord: "Серія",
+                fullEpWord: "🎬 Повна версія",
+                plSearch: "Пошук серії…",
+                plAutoNext: "Далі автоматично",
+                plWatched: "Переглянуто",
+                plNow: "Зараз грає",
+                plNone: "Нічого не знайдено",
+                plEmpty: "Серії скоро з'являться",
+                plPrev: "Попередня серія",
+                plNext: "Наступна серія",
+                partWord: "Частина"
             },
             en: {
                 langIcon: "EN",
@@ -962,13 +1485,30 @@
                 actorsTitle: "🎭 Actors (RMB — details)",
                 episodesLabel: "🍿 Episodes:",
                 onlineLabel: "● Online:",
-                playlistPlaceholder: "[ Playlist Embed / Player ]",
                 teracubeLive: "12 live",
                 dragonLive: "5 live",
                 actorInfoTitle: "ℹ️ Character Information",
                 actorRoleLabel: "Role:",
                 actorStatusLabel: "Status:",
-                goalLabel: "🎯 Goal: 1000 subscribers"
+                goalLabel: "🎯 Goal: 1000 subscribers",
+                modTitle: "🧩 Mod:",
+                modDownload: "⬇ Download mod",
+                modSoon: "⏳ Coming soon",
+                modIn: "⏳ Releases in",
+                dayShort: "d",
+                hourShort: "h",
+                linksTitle: "🔗 Links:",
+                epWord: "Episode",
+                fullEpWord: "🎬 Full version",
+                plSearch: "Search episode…",
+                plAutoNext: "Autoplay next",
+                plWatched: "Watched",
+                plNow: "Now playing",
+                plNone: "Nothing found",
+                plEmpty: "Episodes coming soon",
+                plPrev: "Previous episode",
+                plNext: "Next episode",
+                partWord: "Part"
             }
         };
 
@@ -997,7 +1537,8 @@
             document.getElementById("txt-actors-title").innerText = t.actorsTitle;
             document.getElementById("txt-episodes-label").innerText = t.episodesLabel;
             document.getElementById("txt-online-label").innerText = t.onlineLabel;
-            document.getElementById("txt-playlist-placeholder").innerText = t.playlistPlaceholder;
+            plTexts();
+            if (plSerialKey) renderPlaylist();
 
             document.getElementById("teracube-live").innerText = t.teracubeLive;
             document.getElementById("dragon-live").innerText = t.dragonLive;
@@ -1008,59 +1549,144 @@
 
             const goalEl = document.getElementById("txt-goal-label");
             if (goalEl) goalEl.innerText = t.goalLabel;
+
+            document.getElementById("txt-mod-title").innerText = t.modTitle;
+            document.getElementById("txt-links-title").innerText = t.linksTitle;
+            renderMod();
+            renderLinks();
         }
 
+        // ДАНІ ЗІ ЗГОРТАННЯМ ЧАСТИН
         const channelData = {
             subscribers: "680",         
             serials: {
                 "SuperStickmans": {
                     title: "SuperStickman",
-                    episodes: "1 - 31(P2)",
-                    online: "12",
+                    episodes: "1 - 31(P2)",                   
+                    playlist: [
+                        { url: "videos/1 episode.mp4", title: "1 episode" },
+                        { url: "videos/2 episode.mp4", title: "2 episode" },
+                        { url: "videos/3rd episode.mp4", title: "3 episode" },
+                        { url: "videos/4 episode.mp4", title: "4 episode" },
+                        { url: "videos/5 episode.mp4", title: "5 episode" },
+                        { url: "videos/6 episode тв мен вернувся_.mp4", title: "6 episode" },
+                        { url: "videos/7th episode.mp4", title: "7 episode" },
+                        { url: "videos/8th episode.mp4", title: "8 episode" },
+                        { url: "videos/9th episode.mp4", title: "9 episode" },
+                        { title: "10 episode", parts: [
+                            { url: "videos/10 episode 1 part.mp4", label: "1 part" },
+                            { url: "videos/10 episode part 2.mp4", label: "2 part" },
+                            { url: "videos/10 episode part 3.mp4", label: "3 part" },
+                            { url: "videos/10 episode part 4.mp4", label: "4 part" }
+                        ]},
+                        { url: "videos/11 episode.mp4", title: "11 episode" },
+                        { url: "videos/12 episode.mp4", title: "12 episode" },
+                        { url: "videos/13 episode.mp4", title: "13 episode" },
+                        { url: "videos/14 episode.mp4", title: "14 episode" },
+                        { url: "videos/15 episode.mp4", title: "15 episode" },
+                        { url: "videos/16 episode.mp4", title: "16 episode" },
+                        { url: "videos/17 episode.mp4", title: "17 episode" },
+                        { url: "videos/18 episode.mp4", title: "18 episode" },
+                        { url: "videos/19 episode.mp4", title: "19 episode" },
+                        { title: "20 episode", parts: [
+                            { url: "videos/20 episode 1 part.mp4", label: "1 part" },
+                            { url: "videos/20 episode 2 part.mp4", label: "2 part" },
+                            { url: "videos/20 episode 3 part.mp4", label: "3 part" }
+                        ]},
+                        { url: "videos/21 episode.mp4", title: "21 episode" },
+                        { url: "videos/22 episode.mp4", title: "22 episode" },
+                        { url: "videos/23 episode.mp4", title: "23 episode" },
+                        { url: "videos/24 episode.mp4", title: "24 episode" },
+                        { url: "videos/25 episode.mp4", title: "25 episode" },
+                        { url: "videos/26 episode.mp4", title: "26 episode" },
+                        { url: "videos/27 episode.mp4", title: "27 episode" },
+                        { url: "videos/28 episode.mp4", title: "28 episode" },
+                        { title: "29 episode", parts: [
+                            { url: "videos/29 episode 1 part.mp4", label: "1 part" },
+                            { url: "videos/29 episode 2 part (all starting).mp4", label: "2 part" },
+                            { url: "videos/29 episode 3 part.mp4", label: "3 part" }
+                        ]},
+                        { 
+                            full: "videos/30 episode (all parts + extra scenes).mp4",
+                            title: "30 episode", 
+                            parts: [
+                                { url: "videos/30 episode 1 part.mp4", label: "1 part" },
+                                { url: "videos/30 episode 2 part.mp4", label: "2 part" },
+                                { url: "videos/30 episode 3 part.mp4", label: "3 part" },
+                                { url: "videos/30 episode 4 part.mp4", label: "4 part" }
+                            ]
+                        },
+                        { title: "31 episode", parts: [
+                            { url: "videos/31 episode 1 part.mp4", label: "1 part" },
+                            { url: "videos/31 episode 2 part.mp4", label: "2 part" }
+                        ]}
+                    ],
                     actors: [
                         { name: "Dark", img: "images/Dark.png", desc: "Головний герой серіалу", role: "Головний герой", status: "Alive" },
-                        { name: "Light / white", img: "https://via.placeholder.com/80?text=Light", desc: "Головний антагоніст", role: "Головний злодій", status: "Occupied" },
-                        { name: "Redness / Lues", img: "https://via.placeholder.com/80?text=Redness", desc: "", role: "Другорядний", status: "Alive" },
-                        { name: "Cought", img: "https://via.placeholder.com/80?text=Cough", desc: "", role: "Другорядний", status: "Alive" },
-                        { name: "Flought / Purle", img: "https://via.placeholder.com/80?text=Flought", desc: "", role: "Другорядний", status: "Alive" },
-                        { name: "Douh / Gren", img: "https://via.placeholder.com/80?text=Gren", desc: "", role: "Другорядний", status: "Alive" }
+                        { name: "Light / white", img: "images/quest_mark.png", desc: "Головний антагоніст", role: "Головний злодій", status: "Occupied" },
+                        { name: "Redness / Lues", img: "images/quest_mark.png", desc: "", role: "Другорядний", status: "Alive" },
+                        { name: "Cought", img: "images/quest_mark.png", desc: "", role: "Другорядний", status: "Alive" },
+                        { name: "Flought / Purle", img: "images/quest_mark.png", desc: "", role: "Другорядний", status: "Alive" },
+                        { name: "Douh / Gren", img: "images/quest_mark.png", desc: "", role: "Другорядний", status: "Alive" }
                     ]
                 },
                 "The Heart of Infinity": {
                     title: "The Heart of Infinity",
                     episodes: "1 - 15",
                     online: "5",
+                    playlist: [],
                     actors: [
-                        { name: "Deras", img: "images/quest.mark.png", desc: "", role: "", status: "" },
+                        { name: "Deras", img: "images/quest_mark.png", desc: "", role: "", status: "" },
                         { name: "Dark", img: "images/Dark.png", desc: "", role: "", status: "" },
-                        { name: "Light / white", img: "images/quest.mark.png", desc: "", role: "", status: "" },
-                        { name: "Calimon", img: "images/quest.mark.png", desc: "", role: "", status: "" },
-                        { name: "Edik", img: "images/quest.mark.png", desc: "", role: "", status: "" },
-                        { name: "Edy", img: "images/quest.mark.png", desc: "", role: "", status: "" }
-                    ]
-                },
-                "The Verity": {
-                    title: "The Verity",
-                    episodes: "1 - 5",
-                    online: "2",
-                    actors: [
-                        { name: "Verity", img: "images/verity.webp", desc: "The yellow ball. The peronal helper", role: "Neutral", status: "Active" }
+                        { name: "Light / white", img: "images/quest_mark.png", desc: "", role: "", status: "" },
+                        { name: "Calimon", img: "images/quest_mark.png", desc: "", role: "", status: "" },
+                        { name: "Edik", img: "images/quest_mark.png", desc: "", role: "", status: "" },
+                        { name: "Edy", img: "images/quest_mark.png", desc: "", role: "", status: "" }
                     ]
                 }
             }
         };
 
         function openVideoModal(videoId) {
+            if (!videoId || videoId.includes("XXXXXXXX")) return;
             const modal = document.getElementById("video-modal");
-            const iframe = document.getElementById("modal-iframe");
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            const container = document.getElementById("modal-video-container");
+            container.querySelector('iframe')?.remove();
+            container.querySelector('video')?.remove();
+
+            if (videoId.endsWith(".mp4") || videoId.startsWith("videos/")) {
+                const video = document.createElement("video");
+                video.src = videoId;
+                video.controls = true;
+                video.autoplay = true;
+                video.style.width = "100%";
+                video.style.height = "100%";
+                video.style.borderRadius = "14px";
+                container.appendChild(video);
+            } else {
+                const iframe = document.createElement("iframe");
+                iframe.id = "modal-iframe";
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                iframe.allowFullscreen = true;
+                container.appendChild(iframe);
+            }
             modal.classList.add("active");
+        }
+
+        function openPlaylistCinemaModal() {
+            if (plIndex >= 0 && plVideos[plIndex]) {
+                openVideoModal(plVideos[plIndex].src);
+            }
         }
 
         function closeVideoModal() {
             const modal = document.getElementById("video-modal");
-            const iframe = document.getElementById("modal-iframe");
-            iframe.src = "";
+            const container = document.getElementById("modal-video-container");
+            const video = container.querySelector("video");
+            if (video) video.pause();
+            const iframe = container.querySelector("iframe");
+            if (iframe) iframe.src = "";
             modal.classList.remove("active");
         }
 
@@ -1088,6 +1714,394 @@
                 closeActorModal();
             }
         }
+
+        // ===== Плейлист серій =====
+        const WATCHED_KEY = "deras_watched_v1";
+        const LAST_KEY = "deras_last_v1";
+        const AUTONEXT_KEY = "deras_autonext_v1";
+
+        let plSerialKey = null;
+        let plEps = [];            
+        let plVideos = [];         
+        let plIndex = -1;          
+        let plFilter = "";
+        let plOpenGroups = new Set();
+
+        function lsGet(key, fallback) {
+            try {
+                const v = JSON.parse(localStorage.getItem(key));
+                return v === null || v === undefined ? fallback : v;
+            } catch (e) { return fallback; }
+        }
+        function lsSet(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+        }
+        function esc(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        }
+
+        function getPlaylist(serial) {
+            if (serial._pl) return serial._pl;
+            const eps = [];
+            const videos = [];
+
+            (serial.playlist || []).forEach((entry, i) => {
+                const raw = typeof entry === "string" ? { url: entry } : (entry || {});
+                const epIndex = eps.length;
+
+                if (Array.isArray(raw.parts)) {
+                    const epObj = {
+                        n: epIndex + 1,
+                        title: raw.title || `Episode ${epIndex + 1}`,
+                        full: raw.full || null,
+                        parts: [],
+                        thumb: raw.thumb || ((raw.url || raw.src) ? (raw.url || raw.src) + "#t=1" : "images/Dark.png")
+                    };
+
+                    if (raw.full) {
+                        epObj.fullVi = videos.length;
+                        videos.push({ src: raw.full, ep: epIndex, part: 'full' });
+                    }
+
+                    raw.parts.forEach((p, j) => {
+                        const pUrl = typeof p === "string" ? p : p.url;
+                        const pLabel = typeof p === "object" && p.label ? p.label : `Part ${j + 1}`;
+                        const vi = videos.length;
+                        epObj.parts.push({ src: pUrl, label: pLabel, vi: vi });
+                        videos.push({ src: pUrl, ep: epIndex, part: j });
+                    });
+
+                    eps.push(epObj);
+                } else {
+                    const epObj = {
+                        n: epIndex + 1,
+                        title: raw.title || `Episode ${epIndex + 1}`,
+                        src: raw.url || raw.src || "",
+                        vi: videos.length,
+                        thumb: raw.thumb || ((raw.url || raw.src) ? (raw.url || raw.src) + "#t=1" : "images/Dark.png")
+                    };
+                    videos.push({ src: epObj.src, ep: epIndex, part: null });
+                    eps.push(epObj);
+                }
+            });
+
+            serial._pl = { eps, videos };
+            return serial._pl;
+        }
+
+        function plPartsWord(n) {
+            if (currentLang === "en") return n === 1 ? "part" : "parts";
+            const m10 = n % 10, m100 = n % 100;
+            if (m10 === 1 && m100 !== 11) return "частина";
+            if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return "частини";
+            return "частин";
+        }
+
+        function plTexts() {
+            const t = translations[currentLang];
+            const set = (id, fn) => { const el = document.getElementById(id); if (el) fn(el); };
+            set("pl-search", el => el.placeholder = t.plSearch);
+            set("txt-pl-autonext", el => el.innerText = t.plAutoNext);
+            set("pl-empty-text", el => el.innerText = t.plEmpty);
+            set("pl-prev", el => { el.setAttribute("aria-label", t.plPrev); el.title = t.plPrev; });
+            set("pl-next", el => { el.setAttribute("aria-label", t.plNext); el.title = t.plNext; });
+        }
+
+        function plOpen(serialKey, targetIndex = -1) {
+            const serial = channelData.serials[serialKey];
+            if (!serial) return;
+            const pl = getPlaylist(serial);
+            plSerialKey = serialKey;
+            plEps = pl.eps;
+            plVideos = pl.videos;
+            plFilter = "";
+            plOpenGroups = new Set();
+            plIndex = -1;
+            document.getElementById("pl-search").value = "";
+            document.getElementById("playlist").classList.toggle("has-items", plVideos.length > 0);
+            plTexts();
+            if (!plVideos.length) { renderPlaylist(); return; }
+
+            let idx = targetIndex;
+            if (idx < 0 || idx >= plVideos.length) {
+                const lastId = lsGet(LAST_KEY, {})[serialKey];
+                idx = Math.max(0, plVideos.findIndex(v => v.src === lastId));
+            }
+            playEpisode(idx, false);
+        }
+
+        function playEpisode(vi, autoplay) {
+            if (vi < 0 || vi >= plVideos.length) return;
+            plIndex = vi;
+            const v = plVideos[vi];
+            if (v.part !== null) plOpenGroups.add(v.ep);
+            
+            const last = lsGet(LAST_KEY, {});
+            last[plSerialKey] = v.src;
+            lsSet(LAST_KEY, last);
+
+            plLoadVideo(v.src, autoplay);
+            renderPlaylist();
+            plScrollToActive();
+            updateURLParams();
+        }
+
+        function plStep(d) { playEpisode(plIndex + d, true); }
+
+        function plLoadVideo(src, autoplay) {
+            const player = document.getElementById("local-video-player");
+            const source = document.getElementById("local-video-src");
+
+            if (source && player) {
+                source.src = src;
+                player.load();
+                if (autoplay) player.play().catch(() => {});
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const player = document.getElementById("local-video-player");
+            if (player) {
+                player.addEventListener("ended", () => {
+                    markWatched(plIndex);
+                    if (document.getElementById("pl-autonext").checked && plIndex < plVideos.length - 1) {
+                        playEpisode(plIndex + 1, true);
+                    }
+                });
+            }
+        });
+
+        function markWatched(vi) {
+            const v = plVideos[vi];
+            if (!v) return;
+            const w = lsGet(WATCHED_KEY, {});
+            const key = plSerialKey + ":" + v.src;
+            if (w[key]) return;
+            w[key] = 1;
+            lsSet(WATCHED_KEY, w);
+            renderPlaylist();
+        }
+
+        function plStop() {
+            const player = document.getElementById("local-video-player");
+            if (player) player.pause();
+        }
+
+        function plScrollToActive() {
+            const list = document.getElementById("pl-list");
+            const item = list && list.querySelector(".pl-item.active, .pl-subitem.active");
+            if (item) list.scrollTop = item.offsetTop - (list.clientHeight - item.offsetHeight) / 2;
+        }
+
+        function renderPlaylist() {
+            const list = document.getElementById("pl-list");
+            if (!list) return;
+            if (!plVideos.length) { list.innerHTML = ""; return; }
+
+            const t = translations[currentLang];
+            const w = lsGet(WATCHED_KEY, {});
+            const seen = src => !!w[plSerialKey + ":" + src];
+            const epDone = e => {
+                if (e.parts) return e.parts.every(p => seen(p.src)) && (!e.full || seen(e.full));
+                return seen(e.src);
+            };
+            
+            const total = plEps.length;
+            const doneCount = plEps.filter(epDone).length;
+            const partName = (p, j) => p.label || `${t.partWord} ${j + 1}`;
+
+            const cv = plVideos[plIndex];
+            const ce = cv ? plEps[cv.ep] : null;
+
+            if (ce) {
+                let title;
+                if (ce.parts) {
+                    if (cv.part === 'full') {
+                        title = ce.title ? `${ce.title} · ${t.fullEpWord}` : t.fullEpWord;
+                    } else {
+                        const pn = partName(ce.parts[cv.part], cv.part);
+                        title = ce.title ? `${ce.title} · ${pn}` : pn;
+                    }
+                } else {
+                    title = ce.title || `${t.epWord} ${ce.n}`;
+                }
+                document.getElementById("pl-now-label").innerText = `${t.epWord} ${ce.n} / ${total}`;
+                document.getElementById("pl-now-title").innerText = title;
+            }
+
+            document.getElementById("pl-prev").disabled = plIndex <= 0;
+            document.getElementById("pl-next").disabled = plIndex >= plVideos.length - 1;
+            document.getElementById("pl-progress-text").innerText = `${t.plWatched}: ${doneCount} / ${total}`;
+            document.getElementById("pl-progress-fill").style.width = Math.round(doneCount / total * 100) + "%";
+
+            const q = plFilter.trim().toLowerCase();
+            let html = "";
+            let shown = 0;
+
+            plEps.forEach((e, i) => {
+                const title = e.title || `${t.epWord} ${e.n}`;
+                if (q) {
+                    const hit = title.toLowerCase().includes(q) || String(e.n) === q ||
+                        (e.parts && e.parts.some((p, j) => partName(p, j).toLowerCase().includes(q)));
+                    if (!hit) return;
+                }
+                shown++;
+
+                const thumb = `
+                    <span class="pl-thumb">
+                        <img loading="lazy" src="${e.thumb}" alt="">
+                        <span class="pl-num">${e.n}</span>
+                    </span>`;
+
+                if (!e.parts) {
+                    const active = !!cv && cv.ep === i;
+                    const done = seen(e.src);
+                    const sub = active ? t.plNow : (done ? t.plWatched : "");
+
+                    html += `
+                    <button type="button" class="pl-item${active ? " active" : ""}${done ? " watched" : ""}" data-v="${e.vi}"${active ? ' aria-current="true"' : ""}>
+                        <span class="pl-chev"></span>${thumb}
+                        <span class="pl-meta">
+                            <span class="pl-title">${esc(title)}</span>
+                            ${sub ? `<span class="pl-sub" style="display:block">${esc(sub)}</span>` : ""}
+                        </span>
+                        <span class="pl-check">✓</span>
+                    </button>`;
+                    return;
+                }
+
+                const hasActive = !!cv && cv.ep === i;
+                const open = !!q || plOpenGroups.has(i);
+                const doneParts = e.parts.filter(p => seen(p.src)).length;
+                const sub = `${e.parts.length} ${plPartsWord(e.parts.length)} • ${doneParts}/${e.parts.length}`;
+
+                html += `
+                    <div class="pl-group${open ? " open" : ""}${hasActive ? " has-active" : ""}">
+                        <button type="button" class="pl-item pl-group-head${epDone(e) ? " watched" : ""}" data-g="${i}" aria-expanded="${open}">
+                            <span class="pl-chev">▸</span>${thumb}
+                            <span class="pl-meta">
+                                <span class="pl-title">${esc(title)}</span>
+                                <span class="pl-sub" style="display:block">${esc(sub)}</span>
+                            </span>
+                            <span class="pl-check">✓</span>
+                        </button>`;
+
+                if (open) {
+                    html += '<div class="pl-parts">';
+                    if (e.full) {
+                        const actFull = hasActive && cv.part === 'full';
+                        html += `
+                            <button type="button" class="pl-subitem${actFull ? " active" : ""}${seen(e.full) ? " watched" : ""}" data-v="${e.fullVi}"${actFull ? ' aria-current="true"' : ""}>
+                                <span class="pl-subdot"></span>
+                                <span class="pl-subtitle">${esc(t.fullEpWord)}</span>
+                                <span class="pl-check">✓</span>
+                            </button>`;
+                    }
+                    e.parts.forEach((p, j) => {
+                        const act = hasActive && cv.part === j;
+                        html += `
+                            <button type="button" class="pl-subitem${act ? " active" : ""}${seen(p.src) ? " watched" : ""}" data-v="${p.vi}"${act ? ' aria-current="true"' : ""}>
+                                <span class="pl-subdot"></span>
+                                <span class="pl-subtitle">${esc(partName(p, j))}</span>
+                                <span class="pl-check">✓</span>
+                            </button>`;
+                    });
+                    html += '</div>';
+                }
+                html += '</div>';
+            });
+
+            if (!shown) html = `<div class="pl-none">${esc(t.plNone)}</div>`;
+
+            const st = list.scrollTop;
+            list.innerHTML = html;
+            list.scrollTop = st;
+        }
+
+        function initPlaylist() {
+            document.getElementById("pl-list").addEventListener("click", ev => {
+                const head = ev.target.closest(".pl-group-head");
+                if (head) {
+                    const g = parseInt(head.dataset.g, 10);
+                    if (plOpenGroups.has(g)) plOpenGroups.delete(g); else plOpenGroups.add(g);
+                    renderPlaylist();
+                    return;
+                }
+                const btn = ev.target.closest("[data-v]");
+                if (!btn) return;
+                const vi = parseInt(btn.dataset.v, 10);
+                playEpisode(vi, true);
+            });
+
+            document.getElementById("pl-search").addEventListener("input", ev => {
+                plFilter = ev.target.value;
+                renderPlaylist();
+            });
+
+            const auto = document.getElementById("pl-autonext");
+            auto.checked = lsGet(AUTONEXT_KEY, true);
+            auto.addEventListener("change", () => lsSet(AUTONEXT_KEY, auto.checked));
+        }
+
+        // ===== Робота з URL параметрами =====
+        function updateURLParams() {
+            if (!plSerialKey || !document.getElementById("page-serial").classList.contains("active")) return;
+            const params = new URLSearchParams();
+            params.set("serial", plSerialKey);
+            if (plIndex >= 0 && plVideos[plIndex]) {
+                const v = plVideos[plIndex];
+                const ce = plEps[v.ep];
+                if (ce) {
+                    params.set("ep", ce.n);
+                    if (v.part === "full") {
+                        params.set("part", "full");
+                    } else if (v.part !== null) {
+                        params.set("part", v.part + 1);
+                    }
+                }
+            }
+            history.replaceState(null, "", window.location.pathname + "?" + params.toString());
+        }
+
+        function handleURLOnLoad() {
+            const params = new URLSearchParams(window.location.search);
+            let serialKey = params.get("serial") || params.get("s");
+            let epNum = params.get("ep") || params.get("e");
+            let partVal = params.get("part") || params.get("p");
+
+            if (serialKey && channelData.serials[serialKey]) {
+                let targetVi = -1;
+                const pl = getPlaylist(channelData.serials[serialKey]);
+                if (epNum) {
+                    const num = parseInt(epNum, 10);
+                    const epObj = pl.eps.find(e => e.n === num);
+                    if (epObj) {
+                        if (partVal === "full" && epObj.fullVi !== undefined) {
+                            targetVi = epObj.fullVi;
+                        } else if (partVal && !isNaN(parseInt(partVal, 10)) && epObj.parts) {
+                            const pIdx = parseInt(partVal, 10) - 1;
+                            const targetVideo = epObj.parts[pIdx];
+                            if (targetVideo && targetVideo.vi !== undefined) {
+                                targetVi = targetVideo.vi;
+                            }
+                        } else {
+                            targetVi = epObj.fullVi !== undefined ? epObj.fullVi : (epObj.parts ? epObj.parts[0].vi : epObj.vi);
+                        }
+                    }
+                }
+                openSerial(serialKey, false, targetVi);
+            }
+        }
+
+        window.addEventListener("popstate", () => {
+            const params = new URLSearchParams(window.location.search);
+            const serialKey = params.get("serial") || params.get("s");
+            if (!serialKey) {
+                showMainPage(false);
+            } else if (channelData.serials[serialKey]) {
+                handleURLOnLoad();
+            }
+        });
 
         // ===== Частинки на фоні =====
         function initParticles() {
@@ -1140,6 +2154,10 @@
             fetchLatestVideo();
             fetchSubscribers();
             initParticles();
+            setInterval(renderMod, 60 * 1000);
+            initPlaylist();
+
+            handleURLOnLoad();
 
             setInterval(() => {
                 fetchLatestVideo();
@@ -1147,12 +2165,16 @@
             }, 5 * 60 * 1000);
         });
 
-        function showMainPage() {
+        function showMainPage(updateUrl = true) {
+            plStop();
             document.getElementById("page-serial").classList.remove("active");
             document.getElementById("page-main").classList.add("active");
+            if (updateUrl) {
+                history.pushState(null, "", window.location.pathname);
+            }
         }
 
-        function openSerial(serialKey) {
+        function openSerial(serialKey, updateUrl = true, targetVi = -1) {
             const serial = channelData.serials[serialKey];
             if (!serial) return;
 
@@ -1174,7 +2196,7 @@
 
                 card.innerHTML = `
                     <div class="actor-img">
-                        <img src="${actor.img}" alt="${actor.name}">
+                        <img src="${actor.img}" alt="${actor.name}" onerror="this.onerror=null;this.src='images/quest_mark.png'">
                     </div>
                     <div class="actor-name">${actor.name}</div>
                 `;
@@ -1183,6 +2205,11 @@
 
             document.getElementById("page-main").classList.remove("active");
             document.getElementById("page-serial").classList.add("active");
+            plOpen(serialKey, targetVi);
+
+            if (updateUrl) {
+                updateURLParams();
+            }
         }
     </script>
     <script src="main.js"></script>
